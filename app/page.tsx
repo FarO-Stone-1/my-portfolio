@@ -25,7 +25,7 @@ export default function Home() {
       <div className="relative z-20 flex flex-col min-h-screen">
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        <div className="pt-28 pb-16 flex-1 max-w-6xl w-full mx-auto px-6">
+        <div className="pt-28 pb-16 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8">
           {activeTab === 'home' && <Hero />}
           {activeTab === 'about' && <About />}
           {activeTab === 'portfolio' && <PortfolioShowcase />}
