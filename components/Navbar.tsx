@@ -1,5 +1,7 @@
 'use client';
 
+import { Download } from 'lucide-react';
+
 interface NavbarProps {
   activeTab?: string;
   setActiveTab?: (tab: string) => void;
@@ -31,25 +33,37 @@ export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
           asarekofiaikins.dev
         </button>
 
-        {/* Always Visible Glassy Navigation Buttons with Click Animation */}
-        <nav className="flex items-center gap-1 sm:gap-2">
-          {navLinks.map((link) => {
-            const isActive = activeTab === link.id;
-            return (
-              <button
-                key={link.id}
-                onClick={() => handleNavClick(link.id)}
-                className={`px-2.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 transform active:scale-90 backdrop-blur-md border ${
-                  isActive
-                    ? 'bg-blue-600/30 border-blue-400/50 text-white shadow-md shadow-blue-900/30 scale-105'
-                    : 'bg-slate-900/40 border-slate-800/60 text-gray-300 hover:bg-slate-800/60 hover:text-white hover:border-slate-700 hover:scale-105'
-                }`}
-              >
-                {link.name}
-              </button>
-            );
-          })}
-        </nav>
+        {/* Right Section: Navigation Links & Glassy CV Button */}
+        <div className="flex items-center gap-1.5 sm:gap-3">
+          <nav className="flex items-center gap-1 sm:gap-2">
+            {navLinks.map((link) => {
+              const isActive = activeTab === link.id;
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavClick(link.id)}
+                  className={`px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-md border ${
+                    isActive
+                      ? 'bg-blue-600/30 border-blue-400/50 text-white shadow-md shadow-blue-900/30'
+                      : 'bg-slate-900/40 border-slate-800/60 text-gray-300 hover:bg-slate-800/60 hover:text-white hover:border-slate-700'
+                  }`}
+                >
+                  {link.name}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Frosted Glass CV Button */}
+          <a
+            href="/Asare_Kofi_Aikins_Frontend_CV.pdf"
+            download="Asare_Kofi_Aikins_Frontend_CV.pdf"
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-blue-300 bg-blue-950/40 backdrop-blur-md border border-blue-500/30 hover:bg-blue-600/20 hover:text-white hover:border-blue-400/60 transition-all duration-300 active:scale-95 shadow-sm shadow-blue-950/50"
+          >
+            <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-400" />
+            <span className="hidden xs:inline sm:inline">CV</span>
+          </a>
+        </div>
       </div>
     </header>
   );
