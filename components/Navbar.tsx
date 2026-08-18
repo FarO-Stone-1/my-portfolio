@@ -1,16 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 
 interface NavbarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  activeTab?: string;
+  setActiveTab?: (tab: string) => void;
 }
 
 export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
   const navLinks = [
     { name: 'Home', id: 'home' },
     { name: 'About', id: 'about' },
@@ -19,77 +16,43 @@ export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
   ];
 
   const handleNavClick = (id: string) => {
-    setActiveTab(id);
-    setIsOpen(false);
+    if (setActiveTab) {
+      setActiveTab(id);
+    }
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-slate-950/70 border-b border-slate-800/80">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-slate-950/60 border-b border-slate-800/80 shadow-lg shadow-black/20">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
         
         {/* Brand / Logo */}
         <button 
           onClick={() => handleNavClick('home')}
-          className="text-white font-mono font-bold text-sm sm:text-base tracking-tight hover:text-blue-400 transition-colors text-left"
+          className="text-white font-mono font-bold text-xs sm:text-base tracking-tight hover:text-blue-400 transition-colors text-left truncate"
         >
-          asarekofiaikins.dev
+          asaretonysmithaikins.dev
         </button>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-          {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => handleNavClick(link.id)}
-              className={`transition-colors cursor-pointer ${
-                activeTab === link.id ? 'text-blue-400 font-semibold' : 'hover:text-white'
-              }`}
-            >
-              {link.name}
-            </button>
-          ))}
-        </nav>
-
-        {/* Mobile Hamburger Button */}
-        <div className="flex md:hidden items-center">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-lg text-gray-300 hover:text-white hover:bg-slate-800/60 focus:outline-none transition-colors"
-            aria-label="Toggle Menu"
-          >
-            {isOpen ? (
-              // Close X Icon
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              // Hamburger Menu Icon
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Dropdown Menu */}
-      {isOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-slate-950/95 border-b border-slate-800/80 backdrop-blur-xl px-4 py-6 shadow-2xl transition-all">
-          <div className="flex flex-col gap-4 text-base font-medium text-gray-300">
-            {navLinks.map((link) => (
+        {/* Always Visible Glassy Navigation Buttons */}
+        <nav className="flex items-center gap-1 sm:gap-2">
+          {navLinks.map((link) => {
+            const isActive = activeTab === link.id;
+            return (
               <button
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
-                className={`text-left px-3 py-2 rounded-lg transition-colors ${
-                  activeTab === link.id ? 'bg-slate-900 text-blue-400 font-semibold' : 'hover:bg-slate-900 hover:text-white'
+                className={`px-2.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-md border ${
+                  isActive
+                    ? 'bg-blue-600/30 border-blue-400/50 text-white shadow-md shadow-blue-900/30'
+                    : 'bg-slate-900/40 border-slate-800/60 text-gray-300 hover:bg-slate-800/60 hover:text-white hover:border-slate-700'
                 }`}
               >
                 {link.name}
               </button>
-            ))}
-          </div>
-        </div>
-      )}
+            );
+          })}
+        </nav>
+      </div>
     </header>
   );
 }
