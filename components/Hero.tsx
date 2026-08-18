@@ -6,8 +6,22 @@ export function Hero() {
   const technologies = ['TypeScript', 'React.js', 'Tailwind CSS', 'Next.js'];
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-[calc(100vh-5rem)] px-4 py-8 text-center relative overflow-hidden">
-      <div className="max-w-3xl mx-auto space-y-6 flex flex-col items-center">
+    <section className="flex flex-col lg:flex-row items-center justify-between max-w-6xl mx-auto min-h-[calc(100vh-4rem)] px-4 sm:px-6 lg:px-8 py-10 relative overflow-visible gap-12">
+      
+      {/* 1. Inline Swing Keyframes */}
+      <style>{`
+        @keyframes lanyardSwing {
+          0%, 100% { transform: rotate(-4deg); }
+          50% { transform: rotate(4deg); }
+        }
+        .animate-lanyard {
+          animation: lanyardSwing 3.5s ease-in-out infinite;
+          transform-origin: top center;
+        }
+      `}</style>
+
+      {/* 2. Left Side: Heading & Text Content */}
+      <div className="flex-1 space-y-6 text-center lg:text-left z-10 max-w-2xl">
         
         {/* Status Badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs sm:text-sm font-medium">
@@ -21,7 +35,7 @@ export function Hero() {
         </h1>
 
         {/* Description Paragraph */}
-        <p className="text-gray-300 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed">
+        <p className="text-gray-300 text-sm sm:text-lg leading-relaxed">
           I specialize in building responsive user interfaces with{' '}
           <span className="text-blue-400 font-medium">Next.js</span>,{' '}
           <span className="text-blue-400 font-medium">React</span>, and{' '}
@@ -33,7 +47,7 @@ export function Hero() {
           <p className="text-xs uppercase tracking-widest text-slate-400 font-mono mb-3">
             Technologies & Frameworks
           </p>
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap justify-center lg:justify-start gap-2">
             {technologies.map((tech) => (
               <span
                 key={tech}
@@ -45,39 +59,46 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Hanging Swinging Lanyard Badge */}
-        <div className="relative mt-2 flex flex-col items-center animate-[swing_5s_ease-in-out_infinite] origin-top">
-          {/* Lanyard Rope/String */}
-          <div className="w-1 h-20 bg-gradient-to-b from-blue-500 via-slate-400 to-slate-200 shadow-md" />
+      </div>
 
-          {/* Metal Clip Ring */}
-          <div className="w-5 h-5 rounded-full border-2 border-slate-300 bg-slate-800 -mt-1 z-10 flex items-center justify-center shadow-md">
-            <div className="w-2 h-2 rounded-full bg-slate-400" />
-          </div>
+      {/* 3. Right Side: Swinging Lanyard ID Card Tied to Top Navbar */}
+      <div className="relative lg:static flex justify-center items-start lg:w-72">
+        <div className="absolute top-0 right-1/2 translate-x-1/2 lg:right-16 lg:translate-x-0 z-20 pointer-events-none">
+          <div className="animate-lanyard flex flex-col items-center">
+            
+            {/* Cord extending down from Navbar */}
+            <div className="w-1.5 h-24 sm:h-32 bg-gradient-to-b from-blue-500 via-slate-400 to-slate-200 shadow-md" />
 
-          {/* Glass ID Badge */}
-          <div className="relative -mt-1 p-2.5 bg-slate-900/70 border border-slate-700/80 rounded-2xl backdrop-blur-lg shadow-2xl max-w-[200px] sm:max-w-[220px]">
-            {/* Lanyard Hole Clip Slot */}
-            <div className="w-10 h-1.5 bg-slate-800 rounded-full mx-auto mb-2 border border-slate-600" />
-
-            <div className="relative w-44 h-52 sm:w-48 sm:h-56 overflow-hidden rounded-xl border border-slate-700/50">
-              <Image
-                src="/Assets/Asare1.jpg"
-                alt="Asare Kofi Aikins"
-                fill
-                className="object-cover"
-                priority
-              />
+            {/* Metal Clip Ring */}
+            <div className="w-5 h-5 rounded-full border-2 border-slate-300 bg-slate-800 -mt-1 z-10 flex items-center justify-center shadow-md">
+              <div className="w-2 h-2 rounded-full bg-slate-400" />
             </div>
 
-            <div className="mt-2 text-center">
-              <p className="text-xs font-bold text-white tracking-wide">Asare Kofi Aikins</p>
-              <p className="text-[10px] text-blue-400 font-mono">Frontend Developer</p>
+            {/* Glass ID Badge */}
+            <div className="relative -mt-1 p-2.5 bg-slate-900/80 border border-slate-700/80 rounded-2xl backdrop-blur-lg shadow-2xl w-48 sm:w-52 pointer-events-auto">
+              {/* Lanyard Hole Slot */}
+              <div className="w-10 h-1.5 bg-slate-800 rounded-full mx-auto mb-2 border border-slate-600" />
+
+              <div className="relative w-full h-52 sm:h-56 overflow-hidden rounded-xl border border-slate-700/50">
+                <Image
+                  src="/Assets/Asare1.jpg"
+                  alt="Asare Kofi Aikins"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+
+              <div className="mt-2 text-center">
+                <p className="text-xs font-bold text-white tracking-wide">Asare Kofi Aikins</p>
+                <p className="text-[10px] text-blue-400 font-mono">Frontend Developer</p>
+              </div>
             </div>
+
           </div>
         </div>
-
       </div>
+
     </section>
   );
 }
