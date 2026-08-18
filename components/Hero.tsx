@@ -6,7 +6,7 @@ export function Hero() {
   const technologies = ['TypeScript', 'React.js', 'Tailwind CSS', 'Next.js'];
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-[calc(100vh-5rem)] px-4 py-8 text-center">
+    <section className="flex flex-col items-center justify-center min-h-[calc(100vh-5rem)] px-4 py-8 text-center relative overflow-hidden">
       <div className="max-w-3xl mx-auto space-y-6 flex flex-col items-center">
         
         {/* Status Badge */}
@@ -45,18 +45,34 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Restored Glassy ID Card / Photo Badge */}
-        <div className="mt-8 relative group">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300" />
-          <div className="relative p-2 bg-slate-900/60 border border-slate-700/60 rounded-2xl backdrop-blur-md shadow-2xl">
-            <div className="relative w-44 h-56 sm:w-52 sm:h-64 overflow-hidden rounded-xl">
+        {/* Hanging Swinging Lanyard Badge */}
+        <div className="relative mt-2 flex flex-col items-center animate-[swing_5s_ease-in-out_infinite] origin-top">
+          {/* Lanyard Rope/String */}
+          <div className="w-1 h-20 bg-gradient-to-b from-blue-500 via-slate-400 to-slate-200 shadow-md" />
+
+          {/* Metal Clip Ring */}
+          <div className="w-5 h-5 rounded-full border-2 border-slate-300 bg-slate-800 -mt-1 z-10 flex items-center justify-center shadow-md">
+            <div className="w-2 h-2 rounded-full bg-slate-400" />
+          </div>
+
+          {/* Glass ID Badge */}
+          <div className="relative -mt-1 p-2.5 bg-slate-900/70 border border-slate-700/80 rounded-2xl backdrop-blur-lg shadow-2xl max-w-[200px] sm:max-w-[220px]">
+            {/* Lanyard Hole Clip Slot */}
+            <div className="w-10 h-1.5 bg-slate-800 rounded-full mx-auto mb-2 border border-slate-600" />
+
+            <div className="relative w-44 h-52 sm:w-48 sm:h-56 overflow-hidden rounded-xl border border-slate-700/50">
               <Image
-                src="/Assets/profile.jpg"
+                src="/Assets/Asare1.jpg"
                 alt="Asare Kofi Aikins"
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                className="object-cover"
                 priority
               />
+            </div>
+
+            <div className="mt-2 text-center">
+              <p className="text-xs font-bold text-white tracking-wide">Asare Kofi Aikins</p>
+              <p className="text-[10px] text-blue-400 font-mono">Frontend Developer</p>
             </div>
           </div>
         </div>
