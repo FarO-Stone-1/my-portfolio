@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Link from 'next/link';
 
 interface NavbarProps {
   activeTab: string;
@@ -8,173 +9,87 @@ interface NavbarProps {
 }
 
 export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
-  const [isCvModalOpen, setIsCvModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'portfolio', label: 'Portfolio' },
-    { id: 'contact', label: 'Contact' },
+  const navLinks = [
+    { name: 'Home', id: 'home' },
+    { name: 'About', id: 'about' },
+    { name: 'Portfolio', id: 'portfolio' },
+    { name: 'Contact', id: 'contact' },
   ];
 
-  return (
-    <>
-      <header className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
-        <div className="max-w-6xl mx-auto h-14 px-6 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/15 shadow-lg flex items-center justify-between">
-          {/* Brand */}
-          <div 
-            onClick={() => setActiveTab('home')}
-            className="cursor-pointer font-mono font-bold text-sm tracking-tight text-white hover:text-emerald-400 transition-colors"
-          >
-            asaretonysmithaikins.dev
-          </div>
-
-          {/* Nav Links & CV Button Container */}
-          <div className="flex items-center gap-3">
-            <nav className="hidden sm:flex items-center space-x-2 md:space-x-4">
-              {navItems.map((item) => {
-                const isActive = activeTab === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveTab(item.id)}
-                    className={`px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 ${
-                      isActive
-                        ? 'bg-white/20 text-white shadow-inner border border-white/20 font-semibold'
-                        : 'text-gray-300 hover:text-white hover:bg-white/5'
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
-            </nav>
-
-            {/* CV Manager Button */}
-            <button
-              onClick={() => setIsCvModalOpen(true)}
-              className="px-3.5 py-1.5 rounded-xl bg-blue-600/30 border border-blue-500/40 text-blue-200 text-xs md:text-sm font-semibold hover:bg-blue-600/40 transition-all shadow-md flex items-center gap-2"
-            >
-              <span>📄</span> CV Manager
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* CV Upload & Download Modal */}
-      {isCvModalOpen && (
-        <CVModal onClose={() => setIsCvModalOpen(false)} />
-      )}
-    </>
-  );
-}
-
-interface CVModalProps {
-  onClose: () => void;
-}
-
-function CVModal({ onClose }: CVModalProps) {
-  const [fileName, setFileName] = useState<string | null>(null);
-  const [fileDataUrl, setFileDataUrl] = useState<string | null>(null);
-  const [uploadSuccess, setUploadSuccess] = useState(false);
-
-  // Load saved CV from localStorage on component mount
-  useEffect(() => {
-    const savedName = localStorage.getItem('portfolio_cv_name');
-    const savedData = localStorage.getItem('portfolio_cv_data');
-    if (savedName && savedData) {
-      setFileName(savedName);
-      setFileDataUrl(savedData);
-      setUploadSuccess(true);
-    }
-  }, []);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setFileName(file.name);
-
-      // Convert file to Base64 so it persists in localStorage
-      const reader = new FileReader();
-      reader.onload = () => {
-        const base64String = reader.result as string;
-        setFileDataUrl(base64String);
-        setUploadSuccess(true);
-
-        // Save permanently to browser storage
-        localStorage.setItem('portfolio_cv_name', file.name);
-        localStorage.setItem('portfolio_cv_data', base64String);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleRemove = () => {
-    setFileName(null);
-    setFileDataUrl(null);
-    setUploadSuccess(false);
-    localStorage.removeItem('portfolio_cv_name');
-    localStorage.removeItem('portfolio_cv_data');
+  const handleNavClick = (id: string) => {
+    setActiveTab(id);
+    setIsOpen(false);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-in fade-in duration-200">
-      <div className="w-full max-w-md p-6 sm:p-8 rounded-3xl bg-slate-950/95 border border-white/15 shadow-2xl space-y-6 relative backdrop-blur-xl text-white">
+    <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-slate-950/70 border-b border-slate-800/80">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-sm transition-all"
+        {/* Brand / Logo */}
+        <button 
+          onClick={() => handleNavClick('home')}
+          className="text-white font-mono font-bold text-sm sm:text-base tracking-tight hover:text-blue-400 transition-colors text-left"
         >
-          ✕
+          asarekofiaikins.dev
         </button>
 
-        <div>
-          <h3 className="text-xl font-bold">Curriculum Vitae</h3>
-          <p className="text-xs text-gray-400 mt-1">Your uploaded CV is securely saved across sessions.</p>
-        </div>
-
-        {/* Upload Form */}
-        <div className="space-y-4 p-4 rounded-2xl bg-white/5 border border-white/10">
-          <label className="text-xs font-mono text-blue-300 block">Upload / Replace CV Document</label>
-          <input 
-            type="file" 
-            accept=".pdf,.doc,.docx"
-            onChange={handleFileChange}
-            className="w-full text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-blue-600/30 file:text-blue-200 hover:file:bg-blue-600/50 cursor-pointer"
-          />
-          {uploadSuccess && fileName && (
-            <div className="flex items-center justify-between pt-2 border-t border-white/10">
-              <span className="text-[11px] text-emerald-400 font-mono truncate max-w-[200px]">✓ {fileName}</span>
-              <button 
-                onClick={handleRemove}
-                className="text-[10px] text-red-400 hover:text-red-300 underline font-mono"
-              >
-                Remove
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Download Action for Viewers */}
-        <div className="space-y-2">
-          <span className="text-xs font-mono text-gray-400 block">Viewer Action</span>
-          {fileDataUrl ? (
-            <a
-              href={fileDataUrl}
-              download={fileName || "Asare_Tony-Smith_Aikins_CV.pdf"}
-              className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-lg"
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => handleNavClick(link.id)}
+              className={`transition-colors cursor-pointer ${
+                activeTab === link.id ? 'text-blue-400 font-semibold' : 'hover:text-white'
+              }`}
             >
-              <span>📥</span> Download Saved CV
-            </a>
-          ) : (
-            <div className="w-full py-3 rounded-xl bg-gray-800 text-gray-400 font-semibold text-sm flex items-center justify-center gap-2 border border-white/5 cursor-not-allowed">
-              <span>⚠️</span> Please upload a CV first
-            </div>
-          )}
-        </div>
+              {link.name}
+            </button>
+          ))}
+        </nav>
 
+        {/* Mobile Hamburger Button */}
+        <div className="flex md:hidden items-center">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 rounded-lg text-gray-300 hover:text-white hover:bg-slate-800/60 focus:outline-none transition-colors"
+            aria-label="Toggle Menu"
+          >
+            {isOpen ? (
+              // Close X Icon
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              // Hamburger Menu Icon
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
-    </div>
+
+      {/* Mobile Dropdown Menu */}
+      {isOpen && (
+        <div className="md:hidden absolute top-16 left-0 w-full bg-slate-950/95 border-b border-slate-800/80 backdrop-blur-xl px-4 py-6 shadow-2xl transition-all">
+          <div className="flex flex-col gap-4 text-base font-medium text-gray-300">
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => handleNavClick(link.id)}
+                className={`text-left px-3 py-2 rounded-lg transition-colors ${
+                  activeTab === link.id ? 'bg-slate-900 text-blue-400 font-semibold' : 'hover:bg-slate-900 hover:text-white'
+                }`}
+              >
+                {link.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </header>
   );
 }

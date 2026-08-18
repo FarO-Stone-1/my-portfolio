@@ -8,8 +8,8 @@ export function Hero() {
   return (
     <section className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 flex flex-col lg:flex-row items-center justify-between gap-12 font-sans antialiased text-white">
       
-      {/* Left Column: Intro & Details */}
-      <div className="space-y-6 max-w-xl">
+      {/* Left Column: Intro, Details & Download CV */}
+      <div className="space-y-6 max-w-xl w-full">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-600/40 text-emerald-400 text-xs font-mono shadow-md">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           Frontend Developer
@@ -38,12 +38,12 @@ export function Hero() {
           </div>
         </div>
 
-        {/* CV Download Action */}
+        {/* Download CV Button Action */}
         <div className="pt-4">
           <a
-            href="/Asare-Kofi-Aikins-Teaching-CV.pdf"
-            download="Asare-Kofi-Aikins-Teaching-CV.pdf"
-            className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium shadow-lg hover:from-blue-500 hover:to-indigo-500 transition-all duration-300 transform hover:-translate-y-0.5 border border-blue-400/30"
+            href="/Asare_Kofi_Aikins_Frontend_CV.pdf"
+            download="Asare_Kofi_Aikins_Frontend_CV.pdf"
+            className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium shadow-lg hover:from-blue-500 hover:to-indigo-500 transition-all duration-300 transform hover:-translate-y-0.5 border border-blue-400/30 w-full sm:w-auto text-center"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
