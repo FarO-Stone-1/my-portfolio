@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-
 interface NavbarProps {
   activeTab?: string;
   setActiveTab?: (tab: string) => void;
@@ -28,12 +26,12 @@ export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
         {/* Brand / Logo */}
         <button 
           onClick={() => handleNavClick('home')}
-          className="text-white font-mono font-bold text-xs sm:text-base tracking-tight hover:text-blue-400 transition-colors text-left truncate"
+          className="text-white font-mono font-bold text-xs sm:text-base tracking-tight hover:text-blue-400 transition-colors text-left truncate active:scale-95 transform duration-150"
         >
-          asaretonysmithaikins.dev
+          asarekofiaikins.dev
         </button>
 
-        {/* Always Visible Glassy Navigation Buttons */}
+        {/* Always Visible Glassy Navigation Buttons with Click Animation */}
         <nav className="flex items-center gap-1 sm:gap-2">
           {navLinks.map((link) => {
             const isActive = activeTab === link.id;
@@ -41,10 +39,10 @@ export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
               <button
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
-                className={`px-2.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-md border ${
+                className={`px-2.5 sm:px-4 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-300 transform active:scale-90 backdrop-blur-md border ${
                   isActive
-                    ? 'bg-blue-600/30 border-blue-400/50 text-white shadow-md shadow-blue-900/30'
-                    : 'bg-slate-900/40 border-slate-800/60 text-gray-300 hover:bg-slate-800/60 hover:text-white hover:border-slate-700'
+                    ? 'bg-blue-600/30 border-blue-400/50 text-white shadow-md shadow-blue-900/30 scale-105'
+                    : 'bg-slate-900/40 border-slate-800/60 text-gray-300 hover:bg-slate-800/60 hover:text-white hover:border-slate-700 hover:scale-105'
                 }`}
               >
                 {link.name}
