@@ -21,17 +21,17 @@ export default function Home() {
       {/* 2. Glass Overlay */}
       <div className="fixed inset-0 z-10 bg-black/40 backdrop-blur-sm pointer-events-none" />
 
-      {/* 3. Main Content Container */}
-      <div className="relative z-20 flex flex-col min-h-screen">
+      {/* 3. Main Content Wrapper */}
+      <div className="relative z-30 flex flex-col min-h-screen">
+        {/* Navbar receiving active state handlers */}
         <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        <div className="flex-grow p-4 sm:p-6">
-          <div key={activeTab} className="transition-all duration-300 ease-in-out animate-in fade-in zoom-in-95">
-            {activeTab === 'home' && <Hero />}
-            {activeTab === 'about' && <About />}
-            {activeTab === 'portfolio' && <PortfolioShowcase />}
-            {activeTab === 'contact' && <Contact />}
-          </div>
+        {/* Dynamic Tab Render Area */}
+        <div className="flex-grow">
+          {activeTab === 'home' && <Hero />}
+          {activeTab === 'about' && <About />}
+          {activeTab === 'portfolio' && <PortfolioShowcase />}
+          {activeTab === 'contact' && <Contact />}
         </div>
       </div>
     </main>
